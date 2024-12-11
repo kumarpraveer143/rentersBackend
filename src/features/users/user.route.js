@@ -1,6 +1,7 @@
 import express from "express";
 import UserController from "./user.controller.js";
 import adminAuth from "../../middleware/adminAuth.js";
+import jwtAuth from "../../middleware/jwtAuth.js";
 
 const userRouter = express.Router();
 const userController = new UserController();
@@ -33,6 +34,11 @@ userRouter.post("/login", (req, res) => {
 //route to logout user
 userRouter.post("/logout", (req, res) => {
   userController.logout(req, res);
+});
+
+//route to edit user
+userRouter.put("/editprofile", jwtAuth, (req, res) => {
+  userController.editProfile(req, res);
 });
 
 //route to delete user

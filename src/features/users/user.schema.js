@@ -3,13 +3,7 @@ import bcrypt, { hash } from "bcrypt";
 import crypto from "crypto";
 
 const UserSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-
-  lastName: {
+  name: {
     type: String,
     required: true,
     trim: true,
@@ -70,14 +64,14 @@ const UserSchema = new mongoose.Schema({
       type: String,
       required: true,
       trim: true,
-      match: [/^\d{5}(-\d{4})?$/, "Please fill a valid ZIP code"],
+      match: [/^\d{6}$/, "Please fill a valid 6-digit ZIP code"],
     },
   },
 
   aadharCardNumber: {
     type: String,
-    required: true,
     unique: true,
+    sparse: true,
     match: [/^\d{4}-\d{4}-\d{4}$/, "Please fill a valid Aadhar Card number"],
   },
 

@@ -31,6 +31,15 @@ export default class UserRepository {
     return await userModel.find({});
   }
 
+  //update user
+  async updateUserById(id, data) {
+    const updatedUser = await userModel.findOneAndUpdate(
+      { _id: id },
+      { ...data }
+    );
+    return updatedUser;
+  }
+
   //delete a particular user
   async deleteUser(_id) {
     return await userModel.findOneAndDelete(_id);

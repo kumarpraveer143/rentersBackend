@@ -8,4 +8,5 @@ const connectToMongoose = async () => {
     console.log("Something went wrong with DB");
   }
 };
+
 export default connectToMongoose;

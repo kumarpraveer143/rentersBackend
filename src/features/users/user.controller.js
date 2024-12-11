@@ -29,6 +29,8 @@ export default class UserController {
     try {
       const user = req.body;
       const { email } = req.body;
+
+      // Check if email already exists in the database
       const findUserByEmail = await this.userRepository.findUserByEmail({
         email,
       });
@@ -41,14 +43,26 @@ export default class UserController {
       }
 
       const registeredUser = await this.userRepository.registerUser(req.body);
-
       sendWelcomeEmail(user);
-      res.status(200).json({ success: true, registeredUser: registeredUser });
+
+      return res
+        .status(200)
+        .json({ success: true, registeredUser: registeredUser });
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      if (err.name === "ValidationError") {
+        const validationErrors = Object.values(err.errors).map(
+          (e) => e.message
+        );
+        return res.status(400).json({
+          success: false,
+          message: "Validation error(s): " + validationErrors.join(", "),
+        });
+      }
+
       return res.status(500).json({
         success: false,
-        message: "Something went wrong with database",
+        message: err.message || "Something went wrong with the database",
       });
     }
   }
@@ -101,6 +115,17 @@ export default class UserController {
     return res
       .status(200)
       .json({ success: true, message: "Logout Successfully!" });
+  }
+
+  //user edit controller
+  async editProfile(req, res) {
+    const token = req.cookies.token;
+    const payload = jwt.verify(token, process.env.SECRET_KEY);
+    const id = payload.user._id;
+    const updatedUser = await this.userRepository.updateUserById(id, req.body);
+    return res
+      .status(200)
+      .json({ success: true, message: "updated successfully!" });
   }
 
   //user forget password controller

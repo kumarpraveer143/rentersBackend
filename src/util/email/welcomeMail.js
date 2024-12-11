@@ -73,7 +73,7 @@ const sendWelcomeEmail = async (newUser) => {
             <h1>Welcome to Our Renter's Community!</h1>
         </div>
         <div class="content">
-            <p>Dear ${newUser.firstName},</p>
+            <p>Dear ${newUser.name},</p>
             <p>We are thrilled to welcome you to our community! Your application has been received, and we are excited to help you find the perfect place to call home.</p>
             <p>If you have any questions, feel free to reach out to us at any time. We are here to assist you every step of the way.</p>
             <p>Thank you for choosing us!</p>
