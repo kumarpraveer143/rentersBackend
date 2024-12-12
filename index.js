@@ -29,7 +29,7 @@ app.use("/api/users", userRouter);
 app.use("/api/rooms", roomRouter);
 app.use("/api/history", historyRouter);
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   connectToMongoose();
   console.log("Server is up at the port ", port);
 });

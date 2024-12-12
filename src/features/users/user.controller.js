@@ -90,12 +90,12 @@ export default class UserController {
           .json({ success: false, message: "Invalid Username or Password" });
       }
 
-      const jwtToken = jwt.sign({ user: user }, process.env.SECRET_KEY, {
+      const jwtToken = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
         expiresIn: process.env.JWT_Expire,
       });
 
       return res
-        .cookie("token", jwtToken)
+        .cookie("token", jwtToken, { secure: true, samesite: "none" })
         .status(200)
         .json({ success: true, user: user });
     } catch (err) {
@@ -121,7 +121,7 @@ export default class UserController {
   async editProfile(req, res) {
     const token = req.cookies.token;
     const payload = jwt.verify(token, process.env.SECRET_KEY);
-    const id = payload.user._id;
+    const id = payload.id;
     const updatedUser = await this.userRepository.updateUserById(id, req.body);
     return res
       .status(200)
