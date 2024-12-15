@@ -11,6 +11,12 @@ export default class UserRepository {
     return user;
   }
 
+  //find user by userId
+  async getUserById(id) {
+    const user = userModel.findOne({ _id: id });
+    return user;
+  }
+
   //find user by email controller
   async findUserByEmail(factor, withPassword = false) {
     if (withPassword)

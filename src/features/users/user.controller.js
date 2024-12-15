@@ -96,6 +96,7 @@ export default class UserController {
 
       return res
         .cookie("token", jwtToken, { secure: true, samesite: "none" })
+        .cookie("userId", user._id)
         .status(200)
         .json({ success: true, user: user });
     } catch (err) {

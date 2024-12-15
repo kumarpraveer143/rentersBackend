@@ -9,6 +9,10 @@ const UserSchema = new mongoose.Schema({
     trim: true,
   },
 
+  houseName: {
+    type: String,
+  },
+
   password: {
     type: String,
     required: true,

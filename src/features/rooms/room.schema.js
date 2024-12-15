@@ -1,18 +1,6 @@
 import mongoose from "mongoose";
 
 const RoomSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-
-  description: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-
   address: {
     street: {
       type: String,
@@ -29,11 +17,12 @@ const RoomSchema = new mongoose.Schema({
       required: true,
       trim: true,
     },
+
     zipCode: {
       type: String,
       required: true,
       trim: true,
-      match: [/^\d{5}(-\d{4})?$/, "Please fill a valid ZIP code"],
+      match: [/^\d{6}$/, "Please fill a valid 6-digit ZIP code"],
     },
   },
 
@@ -61,15 +50,10 @@ const RoomSchema = new mongoose.Schema({
     min: 1,
   },
 
-  availabilityDate: {
-    type: Date,
-    required: true,
-  },
-
-  photos: {
-    type: [String], // URLs to images
-    default: [],
-  },
+  // photos: {
+  //   type: [String], // URLs to images
+  //   default: [],
+  // },
 
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -81,7 +65,6 @@ const RoomSchema = new mongoose.Schema({
   renters: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    unique: true,
   },
 
   createdAt: {
@@ -97,19 +80,6 @@ const RoomSchema = new mongoose.Schema({
   isAvailable: {
     type: Boolean,
     default: true,
-  },
-
-  ratings: {
-    average: {
-      type: Number,
-      default: 0,
-      min: 0,
-      max: 5,
-    },
-    numberOfRatings: {
-      type: Number,
-      default: 0,
-    },
   },
 });
 

@@ -2,6 +2,7 @@ import express from "express";
 import RoomController from "./room.controller.js";
 import landOwnerAuth from "../../middleware/landOwners.js";
 import adminAuth from "../../middleware/adminAuth.js";
+import jwtAuth from "../../middleware/jwtAuth.js";
 
 const roomRouter = express.Router();
 
@@ -28,7 +29,7 @@ roomRouter.delete("/:id", landOwnerAuth, (req, res) => {
 });
 
 //update room details
-roomRouter.patch("/:id", landOwnerAuth, (req, res) => {
+roomRouter.put("/:id", landOwnerAuth, (req, res) => {
   roomController.updateRoom(req, res);
 });
 
@@ -38,7 +39,7 @@ roomRouter.post("/toggle-room/:roomId", landOwnerAuth, (req, res) => {
 });
 
 //get rooms by status!
-roomRouter.get("/availableRoom", adminAuth, (req, res) => {
+roomRouter.get("/availableRoom", jwtAuth, (req, res) => {
   roomController.getAvailableRoom(req, res);
 });
 

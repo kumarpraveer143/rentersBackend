@@ -8,7 +8,7 @@ export default class RoomController {
   //registerRoom Controller
   async registerRoom(req, res) {
     const roomObj = req.body;
-    roomObj.owner = req.cookies.userData.user._id;
+    roomObj.owner = req.cookies.userId;
     try {
       const result = await this.roomRepository.registerRoom(roomObj);
       res.json({ success: true, room: result });
@@ -37,7 +37,8 @@ export default class RoomController {
 
   //get room by owner id
   async getRoomsByOwnerId(req, res) {
-    const ownerId = req.cookies.userData.user._id;
+    const ownerId = req.cookies.userId;
+    // console.log(ownerId);
     try {
       const rooms = await this.roomRepository.getRoomsByOwnerId(ownerId);
       res.status(200).json({ success: true, message: rooms });
