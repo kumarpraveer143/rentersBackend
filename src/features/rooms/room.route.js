@@ -8,6 +8,11 @@ const roomRouter = express.Router();
 
 const roomController = new RoomController();
 
+//get room by id
+roomRouter.get("/roomDetails/:id", jwtAuth, (req, res) => {
+  roomController.getRoomDetails(req, res);
+});
+
 //add new room
 roomRouter.post("/", landOwnerAuth, (req, res) => {
   roomController.registerRoom(req, res);

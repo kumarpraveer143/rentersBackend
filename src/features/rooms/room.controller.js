@@ -5,6 +5,22 @@ export default class RoomController {
     this.roomRepository = new RoomRepository();
   }
 
+  async getRoomDetails(req, res) {
+    const id = req.params.id;
+    try {
+      let rooms = await this.roomRepository.getRoomDetails(id);
+      let { homeAddress, name, houseName } = rooms.owner;
+      const cleanedRoom = { ...rooms, owner: { homeAddress, name, houseName } };
+      res.json({ success: true, room: cleanedRoom });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({
+        success: false,
+        message: "Something went wrong with database",
+      });
+    }
+  }
+
   //registerRoom Controller
   async registerRoom(req, res) {
     const roomObj = req.body;

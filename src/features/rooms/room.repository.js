@@ -4,6 +4,11 @@ import mongoose from "mongoose";
 const RoomModel = mongoose.model("Room", RoomSchema);
 
 class RoomRepository {
+  async getRoomDetails(id) {
+    const room = await RoomModel.findOne({ _id: id }).populate("owner").lean();
+    return room;
+  }
+
   //get room by id
   async getRoomById(id) {
     const room = await RoomModel.findOne({ _id: id });
